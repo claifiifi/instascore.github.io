@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaScore</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.7));
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 20px;
+            max-width: 400px;
+        }
+        h1 {
+            color: #405de6;
+            margin-bottom: 10px;
+        }
+        #description {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 18px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 15px;
+            background-color: #f7f7f7;
+            font-size: 16px;
+            box-sizing: border-box; /* Add this line */
+        }
+        button {
+            background-color: #405de6;
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #364fc7;
+        }
+        #result {
+            font-size: 24px;
+            color: #ff6347;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>InstaScore</h1>
+        <p id="description">Can you reach 75?</p>
+        <form id="followerForm">
+            <label for="followers">Number of Followers:</label>
+            <input type="number" id="followers" name="followers" required>
+
+            <label for="following">Number of Following:</label>
+            <input type="number" id="following" name="following" required>
+
+            <button type="button" onclick="calculate()">Calculate</button>
+        </form>
+
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function calculate() {
+            var followers = parseInt(document.getElementById('followers').value);
+            var following = parseInt(document.getElementById('following').value);
+
+            var result = (followers * followers) / (followers + following);
+
+            document.getElementById('result').innerHTML = "Result: " + result.toFixed(2);
+
+            if (result >= 75) {
+                activateConfetti();
+            }
+        }
+
+        function activateConfetti() {
+            const count = 200;
+            const defaults = {
+                origin: { y: 0.7 },
+            };
+
+            function fire(particleRatio, opts) {
+                confetti(
+                    Object.assign({}, defaults, opts, {
+                        particleCount: Math.floor(count * particleRatio),
+                    })
+                );
+            }
+
+            fire(0.25, {
+                spread: 26,
+                startVelocity: 55,
+            });
+
+            fire(0.2, {
+                spread: 60,
+            });
+
+            fire(0.35, {
+                spread: 100,
+                decay: 0.91,
+                scalar: 0.8,
+            });
+
+            fire(0.1, {
+                spread: 120,
+                startVelocity: 25,
+                decay: 0.92,
+                scalar: 1.2,
+            });
+
+            fire(0.1, {
+                spread: 120,
+                startVelocity: 45,
+            });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.12.0/tsparticles.confetti.bundle.min.js"></script>
+</body>
+</html>
